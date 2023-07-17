@@ -14,6 +14,8 @@ jobs:
       cache-disabled: true
   deploy-javadoc:
     needs: [ generate-javadoc ]
+    permissions:
+      contents: write
     uses: Siroshun09/gh-actions-workflows/.github/workflows/deploy-to-gh-pages.yml@v1
     with:
       project-version: ${{ github.event.release.tag_name }}
