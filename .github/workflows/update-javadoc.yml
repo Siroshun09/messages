@@ -8,7 +8,8 @@ jobs:
     uses: Siroshun09/gh-actions-workflows/.github/workflows/gradle-generate-javadoc.yml@v1
     with:
       java-version: '17'
-      gradle-arguments: aggregateJavadoc
+      gradle-arguments: javadoc
+      javadoc-directory: './api/build/docs'
       artifact-name: Javadoc
       cache-disabled: true
   deploy-javadoc:
