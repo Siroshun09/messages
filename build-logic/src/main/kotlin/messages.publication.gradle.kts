@@ -18,7 +18,10 @@ publishing {
             from(components["java"])
 
             pom {
+                name.set(project.name)
                 url.set("https://github.com/Siroshun09/messages")
+                description.set("A library to help implementing localization features for Minecraft project.")
+
                 licenses {
                     license {
                         name.set("APACHE LICENSE, VERSION 2.0")
