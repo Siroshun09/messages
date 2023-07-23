@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.github.siroshun09.messages.api.builder"},{"l":"com.github.siroshun09.messages.api.localize"},{"l":"com.github.siroshun09.messages.api.source"},{"l":"com.github.siroshun09.messages.api.source.fallback"},{"l":"com.github.siroshun09.messages.api.util"}];updateSearchResults();
