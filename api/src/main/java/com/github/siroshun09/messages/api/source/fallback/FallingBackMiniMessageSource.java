@@ -1,6 +1,5 @@
 package com.github.siroshun09.messages.api.source.fallback;
 
-import com.github.siroshun09.messages.api.builder.MiniMessageBuilder;
 import com.github.siroshun09.messages.api.source.MiniMessageSource;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -44,14 +43,5 @@ public record FallingBackMiniMessageSource(@NotNull MiniMessageSource primarySou
         } else {
             return fallbackSource.getMessage(key, tagResolvers);
         }
-    }
-
-    /**
-     * Creates a new {@link MiniMessageBuilder} from this source.
-     *
-     * @return a new {@link MiniMessageBuilder}
-     */
-    public @NotNull MiniMessageBuilder builder() {
-        return MiniMessageBuilder.create(this);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.siroshun09.messages.api.source;
 
+import com.github.siroshun09.messages.api.builder.MiniMessageBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -54,4 +55,12 @@ public interface MiniMessageSource extends ComponentSource {
      */
     @NotNull Component getMessage(@NotNull String key, @NotNull TagResolver... tagResolvers);
 
+    /**
+     * Creates a {@link MiniMessageBuilder} using this {@link MiniMessageSource}.
+     *
+     * @return a {@link MiniMessageBuilder} using this {@link MiniMessageSource}
+     */
+    default @NotNull MiniMessageBuilder builder() {
+        return MiniMessageBuilder.create(this);
+    }
 }

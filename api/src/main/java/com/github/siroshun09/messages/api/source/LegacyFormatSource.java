@@ -1,5 +1,6 @@
 package com.github.siroshun09.messages.api.source;
 
+import com.github.siroshun09.messages.api.builder.LegacyFormatMessageBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.Contract;
@@ -48,4 +49,12 @@ public interface LegacyFormatSource extends ComponentSource {
      */
     @NotNull Component getMessage(@NotNull String key, @NotNull Map<String, String> replacements);
 
+    /**
+     * Creates a {@link LegacyFormatMessageBuilder} using this {@link LegacyFormatSource}.
+     *
+     * @return a {@link LegacyFormatMessageBuilder} using this {@link LegacyFormatSource}
+     */
+    default @NotNull LegacyFormatMessageBuilder builder() {
+        return LegacyFormatMessageBuilder.create(this);
+    }
 }

@@ -1,6 +1,5 @@
 package com.github.siroshun09.messages.api.source.fallback;
 
-import com.github.siroshun09.messages.api.builder.LegacyFormatMessageBuilder;
 import com.github.siroshun09.messages.api.source.LegacyFormatSource;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -35,14 +34,5 @@ public record FallingBackLegacyFormatSource(@NotNull LegacyFormatSource primaryS
         } else {
             return fallbackSource.getMessage(key, replacements);
         }
-    }
-
-    /**
-     * Creates a new {@link LegacyFormatMessageBuilder} from this source.
-     *
-     * @return a new {@link LegacyFormatMessageBuilder}
-     */
-    public @NotNull LegacyFormatMessageBuilder builder() {
-        return LegacyFormatMessageBuilder.create(this);
     }
 }
