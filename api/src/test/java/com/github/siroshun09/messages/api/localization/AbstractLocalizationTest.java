@@ -19,7 +19,8 @@ abstract class AbstractLocalizationTest<T, M extends MessageSource<T>> {
         var localization = createLocalization();
         var source = createSource();
         localization.addSource(Locale.JAPANESE, source);
-        Assertions.assertSame(source, localization.getSource(Locale.JAPANESE));
+        Assertions.assertSame(source, localization.getSource(Locale.JAPANESE)); // ja
+        Assertions.assertSame(source, localization.getSource(Locale.JAPAN)); // ja_JP
 
         localization.removeSource(Locale.JAPANESE);
         Assertions.assertNull(localization.getSource(Locale.JAPANESE));

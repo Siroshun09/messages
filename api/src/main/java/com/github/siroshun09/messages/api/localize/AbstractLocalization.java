@@ -39,7 +39,8 @@ public abstract class AbstractLocalization<T, M extends MessageSource<T>, FB ext
 
     @Override
     public @Nullable M getSource(@NotNull Locale locale) {
-        return sourceMap.get(Objects.requireNonNull(locale));
+        var source = sourceMap.get(Objects.requireNonNull(locale));
+        return source != null ? source : sourceMap.get(new Locale(locale.getLanguage()));
     }
 
     @Override
