@@ -10,6 +10,12 @@ import java.util.function.Function;
 class LoaderTest {
 
     @Test
+    void testLoader() {
+        var loader = throwingLoader();
+        Assertions.assertSame(loader, Loader.loader(loader));
+    }
+
+    @Test
     void testLoad() {
         Assertions.assertThrows(IOException.class, () -> throwingLoader().load(new Object()));
     }

@@ -15,6 +15,19 @@ import java.util.function.Function;
 public interface Loader<T, R> extends Function<T, R> {
 
     /**
+     * Creates a {@link Loader}.
+     *
+     * @param loader an implementation of {@link Loader}
+     * @param <T>    the type of the input to the function
+     * @param <R>    the type of the result of the function
+     * @return the given {@link Loader}
+     */
+    @SuppressWarnings("unchecked")
+    static <T, R> @NotNull Loader<T, R> loader(@NotNull Loader<? super T, ? extends R> loader) {
+        return (Loader<T, R>) loader;
+    }
+
+    /**
      * Applies this function to the given argument.
      *
      * @param input the function argument
