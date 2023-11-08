@@ -1,6 +1,7 @@
 package com.github.siroshun09.messages.api.util;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -34,7 +35,7 @@ public interface Loader<T, R> extends Function<T, R> {
      * @return the function result
      * @throws IOException if I/O error occurred
      */
-    @NotNull R load(@NotNull T input) throws IOException;
+    @UnknownNullability R load(@NotNull T input) throws IOException;
 
     /**
      * {@inheritDoc}
@@ -45,7 +46,7 @@ public interface Loader<T, R> extends Function<T, R> {
      * @return {@inheritDoc}
      */
     @Override
-    default R apply(T t) {
+    default @UnknownNullability R apply(T t) {
         try {
             return load(t);
         } catch (IOException e) {
