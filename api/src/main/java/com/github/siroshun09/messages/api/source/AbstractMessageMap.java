@@ -1,9 +1,11 @@
 package com.github.siroshun09.messages.api.source;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -57,6 +59,26 @@ public abstract class AbstractMessageMap<T> implements MessageMap<T> {
         Objects.requireNonNull(key);
         messageMap.remove(key);
         return this;
+    }
+
+    @Override
+    public void merge(@NotNull Map<String, T> other) {
+        for (var entry : other.entrySet()) {
+            this.messageMap.putIfAbsent(entry.getKey(), entry.getValue());
+        }
+    }
+
+    @Override
+    public @NotNull @Unmodifiable Map<String, T> mergeAndCollectMissingMessages(@NotNull Map<String, T> other) {
+        var missingMessages = new LinkedHashMap<String, T>();
+
+        for (var entry : other.entrySet()) {
+            if (this.messageMap.putIfAbsent(entry.getKey(), entry.getValue()) == null) {
+                missingMessages.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        return Collections.unmodifiableMap(missingMessages);
     }
 
     @Override
