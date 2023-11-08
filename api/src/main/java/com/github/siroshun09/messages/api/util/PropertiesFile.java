@@ -1,5 +1,7 @@
 package com.github.siroshun09.messages.api.util;
 
+import com.github.siroshun09.messages.api.directory.FileExtension;
+import com.github.siroshun09.messages.api.source.StringMessageMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -23,11 +25,31 @@ import java.util.Properties;
 public final class PropertiesFile {
 
     /**
+     * A {@link FileExtension} implementation for the {@code .properties} files.
+     */
+    public static final FileExtension FILE_EXTENSION = FileExtension.create(".properties");
+
+    /**
+     * A default {@link Loader} that uses {@link #load(Reader)}.
+     * <p>
+     * If the file does not exist, this {@link Loader} returns {@link StringMessageMap#create()}
+     */
+    public static final Loader<Path, StringMessageMap> DEFAULT_LOADER = filepath -> {
+        if (Files.isRegularFile(filepath)) {
+            try (var reader = Files.newBufferedReader(filepath, StandardCharsets.UTF_8)) {
+                return StringMessageMap.create(load(reader));
+            }
+        } else {
+            return StringMessageMap.create();
+        }
+    };
+
+    /**
      * Loads the string map from the {@link Reader}.
      * <p>
      * This method uses {@link Properties} to load, but the loaded {@code key-value}s will be stored to {@link LinkedHashMap}.
      * <p>
-     * The give {@link Reader} will <b>NOT</b> be closed by this method.
+     * The given {@link Reader} will <b>NOT</b> be closed by this method.
      *
      * @param reader the {@link Reader} to load the map
      * @return the result of loading
