@@ -5,6 +5,8 @@ adventure = "4.14.0"
 
 junit = "5.10.1"
 
+freefair-plugins = "8.4"
+
 [libraries]
 
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
@@ -14,3 +16,8 @@ adventure-serializer-legacy = { module = "net.kyori:adventure-text-serializer-le
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+
+[plugins]
+
+aggregate-javadoc = { id = "io.freefair.aggregate-javadoc", version.ref = "freefair-plugins" }
+javadoc-links = { id = "io.freefair.javadoc-links", version.ref = "freefair-plugins" }
