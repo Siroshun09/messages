@@ -110,9 +110,9 @@ public final class PropertiesFile {
      */
     public static void append(@NotNull Writer writer, @NotNull Map<String, String> map) throws IOException {
         for (var entry : map.entrySet()) {
-            writer.write(entry.getKey());
+            appendEscapedString(entry.getKey(), true, writer);
             writer.write('=');
-            writer.write(entry.getValue());
+            appendEscapedString(entry.getValue(), false, writer);
             writer.write(System.lineSeparator());
         }
     }
@@ -144,6 +144,32 @@ public final class PropertiesFile {
     public static void append(@NotNull Path file, @NotNull Map<String, String> map) throws IOException {
         try (var writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND)) {
             append(writer, map);
+        }
+    }
+
+    private static void appendEscapedString(@NotNull String theString, boolean escapeSpace, @NotNull Writer writer) throws IOException {
+        char[] chars = theString.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            char c = chars[i];
+            if (61 < c && c < 127) {
+                if (c == '\\') writer.append('\\').append('\\');
+                else writer.append(c);
+                continue;
+            }
+
+            switch (c) {
+                case ' ' -> {
+                    if (i == 0 || escapeSpace) writer.append('\\');
+                    writer.append(' ');
+                }
+                case '\t' -> writer.append('\\').append('t');
+                case '\n' -> writer.append('\\').append('n');
+                case '\r' -> writer.append('\\').append('r');
+                case '\f' -> writer.append('\\').append('f');
+                case '=', ':', '#', '!' -> writer.append('\\').append(c);
+                default -> writer.append(c);
+            }
         }
     }
 
