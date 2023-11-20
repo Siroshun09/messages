@@ -5,7 +5,6 @@ import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -29,7 +28,25 @@ public record FallingBackLegacyFormatSource(@NotNull LegacyFormatSource primaryS
     }
 
     @Override
-    public @NotNull Component getMessage(@NotNull String key, @NotNull Map<String, String> replacements) {
+    public @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement replacement) {
+        if (primarySource.hasMessage(key)) {
+            return primarySource.getMessage(key, replacement);
+        } else {
+            return fallbackSource.getMessage(key, replacement);
+        }
+    }
+
+    @Override
+    public @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement @NotNull ... replacements) {
+        if (primarySource.hasMessage(key)) {
+            return primarySource.getMessage(key, replacements);
+        } else {
+            return fallbackSource.getMessage(key, replacements);
+        }
+    }
+
+    @Override
+    public @NotNull Component getMessage(@NotNull String key, @NotNull Iterable<StringReplacement> replacements) {
         if (primarySource.hasMessage(key)) {
             return primarySource.getMessage(key, replacements);
         } else {

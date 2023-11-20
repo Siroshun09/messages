@@ -1,6 +1,7 @@
 package com.github.siroshun09.messages.legacyformat.builder;
 
 import com.github.siroshun09.messages.api.source.StringMessageMap;
+import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
 import com.github.siroshun09.messages.legacyformat.source.LegacyFormatSource;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -8,13 +9,14 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class LegacyFormatMessageBuilderTest {
 
-    private static final Map<String, String> PLACEHOLDERS = Map.of("%hello%", "Hello", "{world}", "World");
+    private static final List<StringReplacement> PLACEHOLDERS = List.of(new StringReplacement("%hello%", "Hello"), new StringReplacement("{world}", "World"));
     private static final Component EXPECTED_HELLO_WORLD = Component.text("Hello, World!");
 
     @Test
@@ -68,16 +70,9 @@ class LegacyFormatMessageBuilderTest {
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().key(null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholder(null, null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholder("test", null));
-        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders(null));
-
-        var nullKeyMap = new HashMap<String, String>();
-        nullKeyMap.put(null, "test");
-        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders(nullKeyMap));
-
-        var nullValueMap = new HashMap<String, String>();
-        nullValueMap.put("test", null);
-        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders(nullValueMap));
-
+        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholder(null));
+        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders((StringReplacement[]) null));
+        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders((Collection<StringReplacement>)null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().build());
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().key("test").send(null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().send(Audience.empty()));

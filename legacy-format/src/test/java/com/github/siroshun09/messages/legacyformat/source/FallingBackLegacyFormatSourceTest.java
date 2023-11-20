@@ -1,6 +1,7 @@
 package com.github.siroshun09.messages.legacyformat.source;
 
 import com.github.siroshun09.messages.api.source.StringMessageMap;
+import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
 import net.kyori.adventure.text.Component;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,9 +33,9 @@ class FallingBackLegacyFormatSourceTest {
         Assertions.assertThrows(NullPointerException.class, () -> new FallingBackLegacyFormatSource(primary, null));
         Assertions.assertThrows(NullPointerException.class, () -> fallingBack.hasMessage(null));
         Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage(null));
-        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage(null, (Map<String, String>) null));
-        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("a", (Map<String, String>) null));
-        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("b", (Map<String, String>) null));
-        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("c", (Map<String, String>) null));
+        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage(null, (StringReplacement) null));
+        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("a", (StringReplacement) null));
+        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("b", (StringReplacement[]) null));
+        Assertions.assertThrows(NullPointerException.class, () -> fallingBack.getMessage("c", (Iterable<StringReplacement>) null));
     }
 }

@@ -9,8 +9,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 /**
  * An interface that converting the string to {@link Component} using {@link LegacyComponentSerializer}.
  */
@@ -46,11 +44,33 @@ public interface LegacyFormatSource extends ComponentSource {
      * <p>
      * The placeholders will be replaced using {@link String#replace(CharSequence, CharSequence)}.
      *
+     * @param key         the key to get the message
+     * @param replacement the replacement
+     * @return the message that replaced specified characters
+     */
+    @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement replacement);
+
+    /**
+     * Gets the message that replaced specified characters.
+     * <p>
+     * The placeholders will be replaced using {@link String#replace(CharSequence, CharSequence)}.
+     *
      * @param key          the key to get the message
      * @param replacements the replacements
      * @return the message that replaced specified characters
      */
-    @NotNull Component getMessage(@NotNull String key, @NotNull Map<String, String> replacements);
+    @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement @NotNull ... replacements);
+
+    /**
+     * Gets the message that replaced specified characters.
+     * <p>
+     * The placeholders will be replaced using {@link String#replace(CharSequence, CharSequence)}.
+     *
+     * @param key          the key to get the message
+     * @param replacements the replacements
+     * @return the message that replaced specified characters
+     */
+    @NotNull Component getMessage(@NotNull String key, @NotNull Iterable<StringReplacement> replacements);
 
     /**
      * Creates a {@link LegacyFormatMessageBuilder} using this {@link LegacyFormatSource}.

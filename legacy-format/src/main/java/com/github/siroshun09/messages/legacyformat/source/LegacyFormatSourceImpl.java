@@ -6,7 +6,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
 import java.util.Objects;
 
 class LegacyFormatSourceImpl implements LegacyFormatSource {
@@ -30,13 +29,30 @@ class LegacyFormatSourceImpl implements LegacyFormatSource {
     }
 
     @Override
-    public @NotNull Component getMessage(@NotNull String key, @NotNull Map<String, String> replacements) {
-        Objects.requireNonNull(replacements);
+    public @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement replacement) {
+        Objects.requireNonNull(replacement);
+        return serializer.deserialize(source.getMessage(key).replace(replacement.target(), replacement.replacement()));
+    }
 
+    @Override
+    public @NotNull Component getMessage(@NotNull String key, @NotNull StringReplacement @NotNull ... replacements) {
+        Objects.requireNonNull(replacements);
         var message = source.getMessage(key);
 
-        for (var entry : replacements.entrySet()) {
-            message = message.replace(Objects.requireNonNull(entry.getKey()), Objects.requireNonNull(entry.getValue()));
+        for (var replacement: replacements) {
+            message = message.replace(replacement.target(), replacement.replacement());
+        }
+
+        return serializer.deserialize(message);
+    }
+
+    @Override
+    public @NotNull Component getMessage(@NotNull String key, @NotNull Iterable<StringReplacement> replacements) {
+        Objects.requireNonNull(replacements);
+        var message = source.getMessage(key);
+
+        for (StringReplacement replacement : replacements) {
+            message = message.replace(replacement.target(), replacement.replacement());
         }
 
         return serializer.deserialize(message);
