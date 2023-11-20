@@ -12,14 +12,10 @@ val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 dependencies {
     compileOnly(libs.annotations)
     compileOnly(libs.adventure.api)
-    compileOnly(libs.adventure.minimessage)
-    compileOnly(libs.adventure.serializer.legacy)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.adventure.api)
-    testImplementation(libs.adventure.minimessage)
-    testImplementation(libs.adventure.serializer.legacy)
 }
 
 val javaVersion = JavaVersion.VERSION_17
