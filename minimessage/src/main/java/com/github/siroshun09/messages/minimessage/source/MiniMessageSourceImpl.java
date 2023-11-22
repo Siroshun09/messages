@@ -39,4 +39,9 @@ class MiniMessageSourceImpl implements MiniMessageSource {
         Objects.requireNonNull(tagResolvers);
         return deserializer.deserialize(source.getMessage(key), tagResolvers);
     }
+
+    @Override
+    public @NotNull String getRawMessage(@NotNull String key) {
+        return source.getMessage(key);
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.siroshun09.messages.minimessage.source;
 
 import com.github.siroshun09.messages.api.source.ComponentSource;
+import com.github.siroshun09.messages.api.source.RawMessageHolder;
 import com.github.siroshun09.messages.api.source.StringMessageSource;
 import com.github.siroshun09.messages.minimessage.builder.MiniMessageBuilder;
 import net.kyori.adventure.text.Component;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * An interface that converting the string to {@link Component} using {@link MiniMessage}.
  */
-public interface MiniMessageSource extends ComponentSource {
+public interface MiniMessageSource extends ComponentSource, RawMessageHolder<String> {
 
     /**
      * Creates a {@link MiniMessageSource} with {@link StringMessageSource}.

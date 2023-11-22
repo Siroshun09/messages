@@ -53,4 +53,13 @@ public record FallingBackLegacyFormatSource(@NotNull LegacyFormatSource primaryS
             return fallbackSource.getMessage(key, replacements);
         }
     }
+
+    @Override
+    public @NotNull String getRawMessage(@NotNull String key) {
+        if (primarySource.hasMessage(key)) {
+            return primarySource.getRawMessage(key);
+        } else {
+            return fallbackSource.getRawMessage(key);
+        }
+    }
 }

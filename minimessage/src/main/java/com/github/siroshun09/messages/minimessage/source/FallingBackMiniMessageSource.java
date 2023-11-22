@@ -44,4 +44,13 @@ public record FallingBackMiniMessageSource(@NotNull MiniMessageSource primarySou
             return fallbackSource.getMessage(key, tagResolvers);
         }
     }
+
+    @Override
+    public @NotNull String getRawMessage(@NotNull String key) {
+        if (primarySource.hasMessage(key)) {
+            return primarySource.getRawMessage(key);
+        } else {
+            return fallbackSource.getRawMessage(key);
+        }
+    }
 }

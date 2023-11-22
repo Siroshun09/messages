@@ -57,4 +57,9 @@ class LegacyFormatSourceImpl implements LegacyFormatSource {
 
         return serializer.deserialize(message);
     }
+
+    @Override
+    public @NotNull String getRawMessage(@NotNull String key) {
+        return source.getMessage(key);
+    }
 }

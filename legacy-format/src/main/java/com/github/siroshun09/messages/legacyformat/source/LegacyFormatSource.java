@@ -1,5 +1,6 @@
 package com.github.siroshun09.messages.legacyformat.source;
 
+import com.github.siroshun09.messages.api.source.RawMessageHolder;
 import com.github.siroshun09.messages.legacyformat.builder.LegacyFormatMessageBuilder;
 import com.github.siroshun09.messages.api.source.ComponentSource;
 import com.github.siroshun09.messages.api.source.StringMessageSource;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * An interface that converting the string to {@link Component} using {@link LegacyComponentSerializer}.
  */
-public interface LegacyFormatSource extends ComponentSource {
+public interface LegacyFormatSource extends ComponentSource, RawMessageHolder<String> {
 
     /**
      * Creates a {@link LegacyFormatSource} with {@link StringMessageSource}.
