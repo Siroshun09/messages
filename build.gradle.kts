@@ -9,6 +9,8 @@ repositories {
 
 dependencies {
     javadoc(projects.messagesApi)
+    javadoc(projects.messagesLegacyFormat)
+    javadoc(projects.messagesMinimessage)
 
     javadocClasspath(libs.annotations)
     javadocClasspath(libs.adventure.api)
