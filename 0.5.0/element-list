@@ -1,0 +1,17 @@
+com.github.siroshun09.messages.api.base
+com.github.siroshun09.messages.api.builder
+com.github.siroshun09.messages.api.directory
+com.github.siroshun09.messages.api.localize
+com.github.siroshun09.messages.api.source
+com.github.siroshun09.messages.api.util
+com.github.siroshun09.messages.legacyformat.arg
+com.github.siroshun09.messages.legacyformat.base
+com.github.siroshun09.messages.legacyformat.builder
+com.github.siroshun09.messages.legacyformat.localization
+com.github.siroshun09.messages.legacyformat.relacement
+com.github.siroshun09.messages.legacyformat.source
+com.github.siroshun09.messages.minimessage.arg
+com.github.siroshun09.messages.minimessage.base
+com.github.siroshun09.messages.minimessage.builder
+com.github.siroshun09.messages.minimessage.localization
+com.github.siroshun09.messages.minimessage.source
