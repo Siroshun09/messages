@@ -69,4 +69,12 @@ public interface Localization<T, M extends MessageSource<T>, FB extends FallingB
      * @return the {@link MessageSource} of the specified {@link Locale} as {@link FallingBackMessageSource}
      */
     @NotNull FB findSource(@NotNull Locale locale);
+
+    /**
+     * Gets the {@link MessageSource} from the specified object.
+     *
+     * @param obj the object to get
+     * @return the {@link MessageSource} as {@link FallingBackMessageSource}
+     */
+    @NotNull FB findSource(@Nullable Object obj);
 }
