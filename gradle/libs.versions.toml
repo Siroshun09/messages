@@ -3,7 +3,7 @@
 annotations = "24.1.0"
 adventure = "4.15.0"
 
-junit = "5.10.1"
+junit = "5.10.2"
 
 freefair-plugins = "8.6"
 
