@@ -5,7 +5,7 @@ adventure = "4.15.0"
 
 junit = "5.10.1"
 
-freefair-plugins = "8.4"
+freefair-plugins = "8.6"
 
 [libraries]
 
