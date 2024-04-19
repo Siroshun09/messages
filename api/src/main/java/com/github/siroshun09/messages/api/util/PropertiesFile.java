@@ -45,6 +45,11 @@ public final class PropertiesFile {
     };
 
     /**
+     * A default {@link MessageAppender} to appends messages to the properties file.
+     */
+    public static final MessageAppender<Path, String> DEFAULT_APPENDER = PropertiesFile::append;
+
+    /**
      * Loads the string map from the {@link Reader}.
      * <p>
      * This method uses {@link Properties} to load, but the loaded {@code key-value}s will be stored to {@link LinkedHashMap}.
