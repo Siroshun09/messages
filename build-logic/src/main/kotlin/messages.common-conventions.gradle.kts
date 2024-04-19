@@ -39,7 +39,7 @@ tasks {
         opts.addStringOption("Xdoclint:none", "-quiet")
         opts.links(
             "https://jd.advntr.dev/api/${libs.versions.adventure.get()}/",
-            "https://javadoc.io/doc/org.jetbrains/annotations/${libs.versions.annotations.get()}/",
+            //"https://javadoc.io/doc/org.jetbrains/annotations/${libs.versions.annotations.get()}/",
         )
     }
 
