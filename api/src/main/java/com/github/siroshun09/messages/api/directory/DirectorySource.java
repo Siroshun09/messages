@@ -11,14 +11,15 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -37,7 +38,7 @@ public final class DirectorySource<S extends MessageSource<?>> {
      */
     @Contract("_ -> new")
     public static <S extends MessageSource<?>> @NotNull DirectorySource<S> create(@NotNull Path directory) {
-        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptyList(), null, null);
+        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptySet(), null, null);
     }
 
     /**
@@ -48,16 +49,16 @@ public final class DirectorySource<S extends MessageSource<?>> {
      */
     @Contract("_ -> new")
     public static @NotNull DirectorySource<StringMessageMap> forStringMessageMap(@NotNull Path directory) {
-        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptyList(), null, null);
+        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptySet(), null, null);
     }
 
     private final Path directory;
-    private final @Unmodifiable Collection<Locale> defaultLocales;
+    private final @Unmodifiable Set<Locale> defaultLocales;
     private final @Nullable FileExtension fileExtension;
     private final @Nullable Loader<LoadContext, LoadedMessageSource<S>> loader;
 
     private DirectorySource(@NotNull Path directory,
-                            @NotNull Collection<Locale> defaultLocales,
+                            @NotNull Set<Locale> defaultLocales,
                             @Nullable FileExtension fileExtension,
                             @Nullable Loader<LoadContext, LoadedMessageSource<S>> loader) {
         this.directory = directory;
@@ -107,15 +108,15 @@ public final class DirectorySource<S extends MessageSource<?>> {
     }
 
     private @NotNull DirectorySource<S> defaultLocale0(@NotNull @Unmodifiable List<Locale> locales) {
-        List<Locale> newDefaultLocales;
+        Set<Locale> newDefaultLocales;
         if (this.defaultLocales.isEmpty()) {
-            newDefaultLocales = locales;
+            newDefaultLocales = new HashSet<>(locales);
         } else {
-            newDefaultLocales = new ArrayList<>(this.defaultLocales.size() + locales.size());
+            newDefaultLocales = new HashSet<>(this.defaultLocales.size() + locales.size(), 1.0f);
             newDefaultLocales.addAll(this.defaultLocales);
             newDefaultLocales.addAll(locales);
         }
-        return new DirectorySource<>(this.directory, Collections.unmodifiableList(newDefaultLocales), this.fileExtension, this.loader);
+        return new DirectorySource<>(this.directory, Collections.unmodifiableSet(newDefaultLocales), this.fileExtension, this.loader);
     }
 
     /**
