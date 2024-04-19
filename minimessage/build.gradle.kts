@@ -12,6 +12,14 @@ dependencies {
     testImplementation(libs.adventure.minimessage)
 }
 
+afterEvaluate {
+    collector.JavadocAggregator.addProject(this)
+}
+
+tasks.javadoc {
+    (options as StandardJavadocDocletOptions).links("https://jd.advntr.dev/text-minimessage/${libs.versions.adventure.get()}/")
+}
+
 tasks {
     create("generateMiniMessageArgumentsClass") {
         group = "codegen"

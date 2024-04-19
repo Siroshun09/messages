@@ -12,6 +12,14 @@ dependencies {
     testImplementation(libs.adventure.serializer.legacy)
 }
 
+afterEvaluate {
+    collector.JavadocAggregator.addProject(this)
+}
+
+tasks.javadoc {
+    (options as StandardJavadocDocletOptions).links("https://jd.advntr.dev/text-serializer-legacy/${libs.versions.adventure.get()}/")
+}
+
 tasks {
     create("generateLegacyFormatArgumentsClass") {
         group = "codegen"
