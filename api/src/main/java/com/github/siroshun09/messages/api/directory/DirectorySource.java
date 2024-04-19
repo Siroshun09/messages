@@ -1,21 +1,25 @@
 package com.github.siroshun09.messages.api.directory;
 
 import com.github.siroshun09.messages.api.source.MessageSource;
+import com.github.siroshun09.messages.api.source.StringMessageMap;
 import com.github.siroshun09.messages.api.util.Loader;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * A class for loading {@link MessageSource}s from the directory.
@@ -27,78 +31,132 @@ public final class DirectorySource<S extends MessageSource<?>> {
     /**
      * Creates a new {@link DirectorySource}.
      *
-     * @param directory a directory to load sources.
+     * @param directory a directory to load sources
      * @param <S>       the type of the {@link MessageSource}s
      * @return a new {@link DirectorySource}
      */
     @Contract("_ -> new")
     public static <S extends MessageSource<?>> @NotNull DirectorySource<S> create(@NotNull Path directory) {
-        return new DirectorySource<>(Objects.requireNonNull(directory));
+        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptyList(), null, null);
+    }
+
+    /**
+     * Creates a new {@link DirectorySource}.
+     *
+     * @param directory a directory to load sources
+     * @return a new {@link DirectorySource}
+     */
+    @Contract("_ -> new")
+    public static @NotNull DirectorySource<StringMessageMap> forStringMessageMap(@NotNull Path directory) {
+        return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptyList(), null, null);
     }
 
     private final Path directory;
-    private final Collection<Locale> defaultLocales = new ArrayList<>();
-    private @Nullable FileExtension fileExtension;
-    private @Nullable Loader<Path, ? extends S> loader;
+    private final @Unmodifiable Collection<Locale> defaultLocales;
+    private final @Nullable FileExtension fileExtension;
+    private final @Nullable Loader<LoadContext, LoadedMessageSource<S>> loader;
 
-    private DirectorySource(@NotNull Path directory) {
+    private DirectorySource(@NotNull Path directory,
+                            @NotNull Collection<Locale> defaultLocales,
+                            @Nullable FileExtension fileExtension,
+                            @Nullable Loader<LoadContext, LoadedMessageSource<S>> loader) {
         this.directory = directory;
+        this.defaultLocales = defaultLocales;
+        this.fileExtension = fileExtension;
+        this.loader = loader;
     }
 
     /**
      * Sets {@link FileExtension}.
      *
      * @param fileExtension the {@link FileExtension}
-     * @return this {@link DirectorySource} instance
+     * @return a new {@link DirectorySource} instance
      */
     public @NotNull DirectorySource<S> fileExtension(@NotNull FileExtension fileExtension) {
-        this.fileExtension = Objects.requireNonNull(fileExtension);
-        return this;
+        return new DirectorySource<>(this.directory, this.defaultLocales, Objects.requireNonNull(fileExtension), this.loader);
     }
 
     /**
      * Adds a default {@link Locale}.
      *
      * @param locale a default {@link Locale}
-     * @return this {@link DirectorySource} instance
+     * @return a new {@link DirectorySource} instance
      */
     public @NotNull DirectorySource<S> defaultLocale(@NotNull Locale locale) {
-        this.defaultLocales.add(Objects.requireNonNull(locale));
-        return this;
+        return this.defaultLocale0(List.of(locale));
     }
 
     /**
      * Adds default {@link Locale}s.
      *
      * @param locales default {@link Locale}s
-     * @return this {@link DirectorySource} instance
+     * @return a new {@link DirectorySource} instance
      */
-    public @NotNull DirectorySource<S> defaultLocale(@NotNull Locale @NotNull... locales) {
-        Objects.requireNonNull(locales);
-        this.defaultLocales.addAll(Arrays.asList(locales));
-        return this;
+    public @NotNull DirectorySource<S> defaultLocale(@NotNull Locale @NotNull ... locales) {
+        return this.defaultLocale0(List.of(locales));
     }
 
     /**
      * Adds default {@link Locale}s.
      *
      * @param locales default {@link Locale}s
-     * @return this {@link DirectorySource} instance
+     * @return a new {@link DirectorySource} instance
      */
     public @NotNull DirectorySource<S> defaultLocale(@NotNull Collection<Locale> locales) {
-        this.defaultLocales.addAll(Objects.requireNonNull(locales));
-        return this;
+        return this.defaultLocale0(List.copyOf(locales));
+    }
+
+    private @NotNull DirectorySource<S> defaultLocale0(@NotNull @Unmodifiable List<Locale> locales) {
+        List<Locale> newDefaultLocales;
+        if (this.defaultLocales.isEmpty()) {
+            newDefaultLocales = locales;
+        } else {
+            newDefaultLocales = new ArrayList<>(this.defaultLocales.size() + locales.size());
+            newDefaultLocales.addAll(this.defaultLocales);
+            newDefaultLocales.addAll(locales);
+        }
+        return new DirectorySource<>(this.directory, Collections.unmodifiableList(newDefaultLocales), this.fileExtension, this.loader);
     }
 
     /**
      * Sets the {@link Loader} to load {@link MessageSource} from the file.
      *
      * @param loader the {@link Loader} to load {@link MessageSource} from the file
-     * @return this {@link DirectorySource} instance
+     * @return a new {@link DirectorySource} instance
      */
     public @NotNull DirectorySource<S> messageLoader(@NotNull Loader<Path, ? extends S> loader) {
-        this.loader = Objects.requireNonNull(loader);
-        return this;
+        Objects.requireNonNull(loader);
+
+        if (this.loader != null) {
+            throw new IllegalStateException("The message loader is already set.");
+        }
+
+        return new DirectorySource<>(
+                this.directory,
+                this.defaultLocales,
+                this.fileExtension,
+                context -> new LoadedMessageSource<>(context.filepath, context.locale, loader.apply(context.filepath))
+        );
+    }
+
+    /**
+     * Adds a {@link Loader} that processes loaded messages.
+     *
+     * @param processor a {@link Loader} that processes loaded messages.
+     * @param <NS>      the type of new {@link MessageSource}
+     * @return a new {@link DirectorySource} instance
+     */
+    public <NS extends MessageSource<?>> @NotNull DirectorySource<NS> messageProcessor(@NotNull Loader<LoadedMessageSource<S>, NS> processor) {
+        if (this.loader == null) {
+            throw new IllegalStateException("The message loader is not set.");
+        }
+
+        return new DirectorySource<>(
+                this.directory,
+                this.defaultLocales,
+                this.fileExtension,
+                context -> new LoadedMessageSource<>(context.filepath, context.locale, processor.apply(this.loader.apply(context)))
+        );
     }
 
     /**
@@ -106,10 +164,10 @@ public final class DirectorySource<S extends MessageSource<?>> {
      * <p>
      * {@link #fileExtension} and {@link #loader} must be set.
      *
-     * @param consumer a {@link Loader} to consume loaded {@link MessageSource}
+     * @param consumer a {@link Consumer} to consume loaded {@link MessageSource}
      * @throws IOException if I/O error occurred
      */
-    public void load(@NotNull Loader<LoadedMessageSource<S>, Void> consumer) throws IOException {
+    public void load(@NotNull Consumer<LoadedMessageSource<S>> consumer) throws IOException {
         if (this.fileExtension == null) {
             throw new IllegalStateException("localeParser is not set");
         }
@@ -137,9 +195,7 @@ public final class DirectorySource<S extends MessageSource<?>> {
         }
 
         for (var entry : file2LocaleMap.entrySet()) {
-            var filepath = entry.getKey();
-            var locale = entry.getValue();
-            consumer.apply(new LoadedMessageSource<>(filepath, locale, this.loader.load(filepath)));
+            consumer.accept(this.loader.load(new LoadContext(entry.getKey(), entry.getValue())));
         }
     }
 
@@ -162,5 +218,8 @@ public final class DirectorySource<S extends MessageSource<?>> {
         } else {
             return new HashMap<>();
         }
+    }
+
+    private record LoadContext(@NotNull Path filepath, @NotNull Locale locale) {
     }
 }

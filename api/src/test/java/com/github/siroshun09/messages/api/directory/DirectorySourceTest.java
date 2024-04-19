@@ -14,8 +14,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 class DirectorySourceTest {
+
+    private static <T> @NotNull Consumer<T> doNothing() {
+        return t -> {
+        };
+    }
 
     @Test
     void testExistingDirectory(@TempDir Path dir) throws IOException {
@@ -25,10 +31,7 @@ class DirectorySourceTest {
 
         var loaded = new HashMap<Locale, StringMessageMap>();
 
-        source.load(loadedSource -> {
-            loaded.put(loadedSource.locale(), loadedSource.messageSource());
-            return null;
-        });
+        source.load(loadedSource -> loaded.put(loadedSource.locale(), loadedSource.messageSource()));
 
         Assertions.assertEquals(2, loaded.size());
 
@@ -50,10 +53,7 @@ class DirectorySourceTest {
 
         var loaded = new HashMap<Locale, StringMessageMap>();
 
-        source.load(loadedSource -> {
-            loaded.put(loadedSource.locale(), loadedSource.messageSource());
-            return null;
-        });
+        source.load(loadedSource -> loaded.put(loadedSource.locale(), loadedSource.messageSource()));
 
         Assertions.assertEquals(1, loaded.size());
 
@@ -68,16 +68,13 @@ class DirectorySourceTest {
     void testNewDirectoryWithoutDefaultLocales(@TempDir Path dir) throws IOException {
         var directory = dir.resolve("sources");
         var source =
-                DirectorySource.<StringMessageMap>create(directory)
+                DirectorySource.forStringMessageMap(directory)
                         .fileExtension(PropertiesFile.FILE_EXTENSION)
                         .messageLoader(PropertiesFile.DEFAULT_LOADER);
 
         var loaded = new HashMap<Locale, StringMessageMap>();
 
-        source.load(loadedSource -> {
-            loaded.put(loadedSource.locale(), loadedSource.messageSource());
-            return null;
-        });
+        source.load(loadedSource -> loaded.put(loadedSource.locale(), loadedSource.messageSource()));
 
         Assertions.assertTrue(loaded.isEmpty());
         Assertions.assertFalse(Files.exists(directory));
@@ -94,22 +91,18 @@ class DirectorySourceTest {
         Assertions.assertThrows(NullPointerException.class, () -> source.defaultLocale((Locale) null));
         Assertions.assertThrows(NullPointerException.class, () -> source.defaultLocale((Locale[]) null));
         Assertions.assertThrows(NullPointerException.class, () -> source.defaultLocale((Collection<Locale>) null));
+        Assertions.assertThrows(NullPointerException.class, () -> source.defaultLocale(null, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> source.defaultLocale(Collections.singletonList(null)));
         Assertions.assertThrows(NullPointerException.class, () -> source.messageLoader(null));
         Assertions.assertThrows(NullPointerException.class, () -> createSource(dir).load(null));
-
-        var nullLocales = createSource(dir).defaultLocale(null, null, null);
-        Assertions.assertThrows(NullPointerException.class, () -> nullLocales.load(s -> null));
-
-        var nullElements = createSource(dir).defaultLocale(Collections.singletonList(null));
-        Assertions.assertThrows(NullPointerException.class, () -> nullElements.load(s -> null));
     }
 
     @Test
     void testIllegalState() {
         var dir = Path.of("example");
-        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).load(s -> null));
-        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).fileExtension(PropertiesFile.FILE_EXTENSION).load(s -> null));
-        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).messageLoader(PropertiesFile.DEFAULT_LOADER).load(s -> null));
+        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).load(doNothing()));
+        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).fileExtension(PropertiesFile.FILE_EXTENSION).load(doNothing()));
+        Assertions.assertThrows(IllegalStateException.class, () -> DirectorySource.create(dir).messageLoader(PropertiesFile.DEFAULT_LOADER).load(doNothing()));
     }
 
     private static void createJapaneseFile(@NotNull Path directory) throws IOException {
@@ -123,7 +116,7 @@ class DirectorySourceTest {
     }
 
     private static DirectorySource<StringMessageMap> createSource(Path directory) {
-        return DirectorySource.<StringMessageMap>create(directory)
+        return DirectorySource.forStringMessageMap(directory)
                 .fileExtension(PropertiesFile.FILE_EXTENSION)
                 .defaultLocale(Locale.ENGLISH)
                 .messageLoader(PropertiesFile.DEFAULT_LOADER);
