@@ -49,6 +49,7 @@ public interface MessageMap<T> extends MessageSource<T> {
      *
      * @param other the {@link Map} to merge
      * @return the messages that were not included in this {@link MessageMap}
+     * @deprecated use {@link #merge(Map)} instead of this method
      */
     @Deprecated(forRemoval = true, since = "0.6.0")
     @ApiStatus.ScheduledForRemoval(inVersion = "0.7.0")
