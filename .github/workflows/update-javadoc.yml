@@ -9,7 +9,7 @@ jobs:
     with:
       java-version: '17'
       gradle-arguments: javadoc
-      javadoc-directory: './build/docs/javadoc'
+      javadoc-directory: './build/docs'
       artifact-name: Javadoc
       cache-disabled: true
   deploy-javadoc:
