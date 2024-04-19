@@ -49,19 +49,11 @@ class StringMessageMapTest {
     @Test
     void testMerge() {
         var map = StringMessageMap.create(Map.of("a", "b"));
-        map.merge(Map.of("a", "c", "b", "d"));
+        var addedMessages = map.merge(Map.of("a", "c", "b", "d"));
 
         Assertions.assertEquals("b", map.getMessage("a"));
         Assertions.assertEquals("d", map.getMessage("b"));
-    }
 
-    @Test
-    void testMergeAndCollect() {
-        var map = StringMessageMap.create(Map.of("a", "b"));
-        var missing = map.mergeAndCollectMissingMessages(Map.of("a", "c", "b", "d"));
-
-        Assertions.assertEquals("b", map.getMessage("a"));
-        Assertions.assertEquals("d", map.getMessage("b"));
-        Assertions.assertEquals(Map.of("b", "d"), missing);
+        Assertions.assertEquals(Map.of("b", "d"), addedMessages);
     }
 }

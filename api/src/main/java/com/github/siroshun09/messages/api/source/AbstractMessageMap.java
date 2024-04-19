@@ -61,15 +61,9 @@ public abstract class AbstractMessageMap<T> implements MessageMap<T> {
         return this;
     }
 
-    @Override
-    public void merge(@NotNull Map<String, T> other) {
-        for (var entry : other.entrySet()) {
-            this.messageMap.putIfAbsent(entry.getKey(), entry.getValue());
-        }
-    }
 
     @Override
-    public @NotNull @Unmodifiable Map<String, T> mergeAndCollectMissingMessages(@NotNull Map<String, T> other) {
+    public @NotNull @Unmodifiable Map<String, T> merge(@NotNull Map<String, T> other) {
         var missingMessages = new LinkedHashMap<String, T>();
 
         for (var entry : other.entrySet()) {
