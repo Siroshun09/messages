@@ -10,10 +10,13 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 class DirectorySourceTest {
@@ -78,6 +81,42 @@ class DirectorySourceTest {
 
         Assertions.assertTrue(loaded.isEmpty());
         Assertions.assertFalse(Files.exists(directory));
+    }
+
+    @Test
+    void testDefaultLocales(@TempDir Path dir) throws IOException {
+        var directory = dir.resolve("sources");
+        var locales = new ArrayList<>(List.of(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN, Locale.JAPANESE, Locale.TRADITIONAL_CHINESE, Locale.SIMPLIFIED_CHINESE));
+
+        DirectorySource.forStringMessageMap(directory)
+                .fileExtension(PropertiesFile.FILE_EXTENSION)
+                .defaultLocale(locales.get(0))
+                .defaultLocale(locales.subList(1, 3).toArray(Locale[]::new))
+                .defaultLocale(locales.subList(3, 6))
+                .messageLoader(PropertiesFile.DEFAULT_LOADER)
+                .load(loaded -> Assertions.assertTrue(locales.remove(loaded.locale())));
+    }
+
+    @Test
+    void testLoaderAndProcessor(@TempDir Path dir) throws IOException {
+        var directory = dir.resolve("sources");
+        var counter = new AtomicInteger();
+
+        DirectorySource.forStringMessageMap(directory)
+                .fileExtension(PropertiesFile.FILE_EXTENSION)
+                .defaultLocale(Locale.ENGLISH)
+                .messageLoader(filepath -> {
+                    Assertions.assertEquals(1, counter.incrementAndGet());
+                    return PropertiesFile.DEFAULT_LOADER.load(filepath);
+                })
+                .messageProcessor(loaded -> {
+                    Assertions.assertEquals(2, counter.incrementAndGet());
+                    return loaded.messageSource();
+                })
+                .messageProcessor(loaded -> {
+                    Assertions.assertEquals(3, counter.incrementAndGet());
+                    return loaded.messageSource();
+                }).load(doNothing());
     }
 
     @SuppressWarnings("DataFlowIssue")
