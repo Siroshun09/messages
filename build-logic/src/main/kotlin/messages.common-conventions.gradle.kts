@@ -13,9 +13,10 @@ dependencies {
     compileOnly(libs.annotations)
     compileOnly(libs.adventure.api)
 
+    testImplementation(libs.adventure.api)
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.adventure.api)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 val javaVersion = JavaVersion.VERSION_17
