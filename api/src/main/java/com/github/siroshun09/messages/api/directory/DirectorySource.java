@@ -3,6 +3,7 @@ package com.github.siroshun09.messages.api.directory;
 import com.github.siroshun09.messages.api.source.MessageSource;
 import com.github.siroshun09.messages.api.source.StringMessageMap;
 import com.github.siroshun09.messages.api.util.Loader;
+import com.github.siroshun09.messages.api.util.PropertiesFile;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,6 +51,17 @@ public final class DirectorySource<S extends MessageSource<?>> {
     @Contract("_ -> new")
     public static @NotNull DirectorySource<StringMessageMap> forStringMessageMap(@NotNull Path directory) {
         return new DirectorySource<>(Objects.requireNonNull(directory), Collections.emptySet(), null, null);
+    }
+
+    /**
+     * Creates a new {@link DirectorySource}, which loads messages from properties files.
+     *
+     * @param directory a directory to load sources
+     * @return a new {@link DirectorySource}
+     */
+    @Contract("_ -> new")
+    public static @NotNull DirectorySource<StringMessageMap> propertiesFiles(@NotNull Path directory) {
+        return DirectorySource.forStringMessageMap(directory).fileExtension(PropertiesFile.FILE_EXTENSION).messageLoader(PropertiesFile.DEFAULT_LOADER);
     }
 
     private final Path directory;

@@ -70,10 +70,7 @@ class DirectorySourceTest {
     @Test
     void testNewDirectoryWithoutDefaultLocales(@TempDir Path dir) throws IOException {
         var directory = dir.resolve("sources");
-        var source =
-                DirectorySource.forStringMessageMap(directory)
-                        .fileExtension(PropertiesFile.FILE_EXTENSION)
-                        .messageLoader(PropertiesFile.DEFAULT_LOADER);
+        var source = DirectorySource.propertiesFiles(directory);
 
         var loaded = new HashMap<Locale, StringMessageMap>();
 
@@ -155,9 +152,6 @@ class DirectorySourceTest {
     }
 
     private static DirectorySource<StringMessageMap> createSource(Path directory) {
-        return DirectorySource.forStringMessageMap(directory)
-                .fileExtension(PropertiesFile.FILE_EXTENSION)
-                .defaultLocale(Locale.ENGLISH)
-                .messageLoader(PropertiesFile.DEFAULT_LOADER);
+        return DirectorySource.propertiesFiles(directory).defaultLocale(Locale.ENGLISH);
     }
 }
