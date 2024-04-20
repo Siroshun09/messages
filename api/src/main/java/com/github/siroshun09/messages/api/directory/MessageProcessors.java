@@ -4,6 +4,7 @@ import com.github.siroshun09.messages.api.source.MessageMap;
 import com.github.siroshun09.messages.api.source.StringMessageMap;
 import com.github.siroshun09.messages.api.util.Loader;
 import com.github.siroshun09.messages.api.util.MessageAppender;
+import com.github.siroshun09.messages.api.util.PropertiesFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +40,16 @@ public final class MessageProcessors {
 
             return loaded.messageSource();
         };
+    }
+
+    /**
+     * Creates a {@link Loader} to append missing messages to the given {@link StringMessageMap} and the loaded properties file.
+     *
+     * @param defaultMessageLoader a {@link Loader} to get default messages
+     * @return a {@link Loader} to append missing messages to the given {@link StringMessageMap} and the loaded properties file.
+     */
+    public static @NotNull Loader<LoadedMessageSource<StringMessageMap>, StringMessageMap> appendMissingMessagesToPropertiesFile(@NotNull Loader<Locale, @Nullable Map<String, String>> defaultMessageLoader) {
+        return appendMissingStringMessages(defaultMessageLoader, PropertiesFile.DEFAULT_APPENDER);
     }
 
     /**

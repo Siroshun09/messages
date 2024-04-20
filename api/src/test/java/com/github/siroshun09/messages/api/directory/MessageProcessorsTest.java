@@ -1,7 +1,6 @@
 package com.github.siroshun09.messages.api.directory;
 
 import com.github.siroshun09.messages.api.source.StringMessageMap;
-import com.github.siroshun09.messages.api.util.PropertiesFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -15,10 +14,10 @@ import java.util.Map;
 class MessageProcessorsTest {
 
     @Test
-    void testAppendMessageSources(@TempDir Path dir) throws IOException  {
+    void testAppendMessageSources(@TempDir Path dir) throws IOException {
         var filepath = dir.resolve("test.properties");
         var loaded = new LoadedMessageSource<>(filepath, Locale.ENGLISH, StringMessageMap.create(Map.of("a", "b")));
-        MessageProcessors.appendMissingStringMessages(ignored -> Map.of("a", "B", "c", "d"), PropertiesFile.DEFAULT_APPENDER).load(loaded);
+        MessageProcessors.appendMissingMessagesToPropertiesFile(ignored -> Map.of("a", "B", "c", "d")).load(loaded);
 
         Assertions.assertEquals("b", loaded.messageSource().getMessage("a"));
         Assertions.assertEquals("d", loaded.messageSource().getMessage("c"));
