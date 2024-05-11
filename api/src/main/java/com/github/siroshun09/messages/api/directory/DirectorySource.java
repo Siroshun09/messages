@@ -145,10 +145,10 @@ public final class DirectorySource<S extends MessageSource<?>> {
         }
 
         return new DirectorySource<>(
-                this.directory,
-                this.defaultLocales,
-                this.fileExtension,
-                context -> new LoadedMessageSource<>(context.filepath, context.locale, loader.apply(context.filepath))
+            this.directory,
+            this.defaultLocales,
+            this.fileExtension,
+            context -> new LoadedMessageSource<>(context.filepath, context.locale, loader.apply(context.filepath))
         );
     }
 
@@ -165,10 +165,10 @@ public final class DirectorySource<S extends MessageSource<?>> {
         }
 
         return new DirectorySource<>(
-                this.directory,
-                this.defaultLocales,
-                this.fileExtension,
-                context -> new LoadedMessageSource<>(context.filepath, context.locale, processor.apply(this.loader.apply(context)))
+            this.directory,
+            this.defaultLocales,
+            this.fileExtension,
+            context -> new LoadedMessageSource<>(context.filepath, context.locale, processor.apply(this.loader.apply(context)))
         );
     }
 

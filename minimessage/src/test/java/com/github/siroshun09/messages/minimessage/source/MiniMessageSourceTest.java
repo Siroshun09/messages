@@ -21,11 +21,11 @@ class MiniMessageSourceTest {
     private static final String MINI_MESSAGE_HELLO_WORLD_WITH_PLACEHOLDER = "<green><hello></green><gray>, </gray><#123456>World</#123456><red><bold>!!</bold></red>";
     private static final String MINI_MESSAGE_HELLO_WORLD_WITH_TWO_PLACEHOLDERS = "<green><hello></green><gray>, </gray><#123456><world></#123456><red><bold>!!</bold></red>";
     private static final Component EXPECTED_HELLO_WORLD =
-            Component.text()
-                    .append(Component.text("Hello", NamedTextColor.GREEN))
-                    .append(Component.text(", ", NamedTextColor.GRAY))
-                    .append(Component.text("World", TextColor.fromHexString("#123456")))
-                    .append(Component.text("!!", Style.style(NamedTextColor.RED, TextDecoration.BOLD))).build();
+        Component.text()
+            .append(Component.text("Hello", NamedTextColor.GREEN))
+            .append(Component.text(", ", NamedTextColor.GRAY))
+            .append(Component.text("World", TextColor.fromHexString("#123456")))
+            .append(Component.text("!!", Style.style(NamedTextColor.RED, TextDecoration.BOLD))).build();
 
 
     @Test

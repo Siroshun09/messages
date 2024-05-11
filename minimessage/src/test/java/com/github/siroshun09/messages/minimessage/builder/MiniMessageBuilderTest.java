@@ -36,38 +36,38 @@ class MiniMessageBuilderTest {
     @Test
     void testBuild() {
         Assertions.assertEquals(
-                Component.text("Hello, <world>!"),
-                newBuilder()
-                        .key("key")
-                        .tagResolver(HELLO)
-                        .build()
+            Component.text("Hello, <world>!"),
+            newBuilder()
+                .key("key")
+                .tagResolver(HELLO)
+                .build()
         );
 
         Assertions.assertEquals(
-                EXPECTED_HELLO_WORLD,
-                newBuilder()
-                        .key("key")
-                        .tagResolvers(HELLO, WORLD)
-                        .build()
+            EXPECTED_HELLO_WORLD,
+            newBuilder()
+                .key("key")
+                .tagResolvers(HELLO, WORLD)
+                .build()
         );
 
         Assertions.assertEquals(
-                EXPECTED_HELLO_WORLD,
-                newBuilder()
-                        .key("key")
-                        .tagResolvers(List.of(HELLO, WORLD))
-                        .build()
+            EXPECTED_HELLO_WORLD,
+            newBuilder()
+                .key("key")
+                .tagResolvers(List.of(HELLO, WORLD))
+                .build()
         );
     }
 
     @Test
     void testAsPlaceholder() {
         Assertions.assertEquals(
-                Placeholder.component("placeholder", EXPECTED_HELLO_WORLD),
-                newBuilder()
-                        .key("key")
-                        .tagResolvers(HELLO, WORLD)
-                        .asPlaceholder("placeholder")
+            Placeholder.component("placeholder", EXPECTED_HELLO_WORLD),
+            newBuilder()
+                .key("key")
+                .tagResolvers(HELLO, WORLD)
+                .asPlaceholder("placeholder")
         );
     }
 
@@ -76,15 +76,15 @@ class MiniMessageBuilderTest {
         var received = new AtomicBoolean();
 
         newBuilder()
-                .key("key")
-                .tagResolvers(HELLO, WORLD)
-                .send(new Audience() {
-                    @Override
-                    public void sendMessage(@NotNull Component message) {
-                        Assertions.assertEquals(EXPECTED_HELLO_WORLD, message);
-                        received.set(true);
-                    }
-                });
+            .key("key")
+            .tagResolvers(HELLO, WORLD)
+            .send(new Audience() {
+                @Override
+                public void sendMessage(@NotNull Component message) {
+                    Assertions.assertEquals(EXPECTED_HELLO_WORLD, message);
+                    received.set(true);
+                }
+            });
 
         Assertions.assertTrue(received.get());
     }

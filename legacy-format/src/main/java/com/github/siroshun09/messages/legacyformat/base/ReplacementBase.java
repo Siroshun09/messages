@@ -29,7 +29,7 @@ public interface ReplacementBase extends Function<LegacyFormatSource, StringRepl
     /**
      * Creates a new {@link ReplacementBase} from the key and the message key.
      *
-     * @param key        the key
+     * @param key         the key
      * @param replacement the replacement
      * @return a new {@link ReplacementBase}
      * @see StringReplacement

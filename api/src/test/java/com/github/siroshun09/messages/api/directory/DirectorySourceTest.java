@@ -86,12 +86,12 @@ class DirectorySourceTest {
         var locales = new ArrayList<>(List.of(Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN, Locale.JAPANESE, Locale.TRADITIONAL_CHINESE, Locale.SIMPLIFIED_CHINESE));
 
         DirectorySource.forStringMessageMap(directory)
-                .fileExtension(PropertiesFile.FILE_EXTENSION)
-                .defaultLocale(locales.get(0))
-                .defaultLocale(locales.subList(1, 3).toArray(Locale[]::new))
-                .defaultLocale(locales.subList(3, 6))
-                .messageLoader(PropertiesFile.DEFAULT_LOADER)
-                .load(loaded -> Assertions.assertTrue(locales.remove(loaded.locale())));
+            .fileExtension(PropertiesFile.FILE_EXTENSION)
+            .defaultLocale(locales.get(0))
+            .defaultLocale(locales.subList(1, 3).toArray(Locale[]::new))
+            .defaultLocale(locales.subList(3, 6))
+            .messageLoader(PropertiesFile.DEFAULT_LOADER)
+            .load(loaded -> Assertions.assertTrue(locales.remove(loaded.locale())));
     }
 
     @Test
@@ -100,20 +100,20 @@ class DirectorySourceTest {
         var counter = new AtomicInteger();
 
         DirectorySource.forStringMessageMap(directory)
-                .fileExtension(PropertiesFile.FILE_EXTENSION)
-                .defaultLocale(Locale.ENGLISH)
-                .messageLoader(filepath -> {
-                    Assertions.assertEquals(1, counter.incrementAndGet());
-                    return PropertiesFile.DEFAULT_LOADER.load(filepath);
-                })
-                .messageProcessor(loaded -> {
-                    Assertions.assertEquals(2, counter.incrementAndGet());
-                    return loaded.messageSource();
-                })
-                .messageProcessor(loaded -> {
-                    Assertions.assertEquals(3, counter.incrementAndGet());
-                    return loaded.messageSource();
-                }).load(doNothing());
+            .fileExtension(PropertiesFile.FILE_EXTENSION)
+            .defaultLocale(Locale.ENGLISH)
+            .messageLoader(filepath -> {
+                Assertions.assertEquals(1, counter.incrementAndGet());
+                return PropertiesFile.DEFAULT_LOADER.load(filepath);
+            })
+            .messageProcessor(loaded -> {
+                Assertions.assertEquals(2, counter.incrementAndGet());
+                return loaded.messageSource();
+            })
+            .messageProcessor(loaded -> {
+                Assertions.assertEquals(3, counter.incrementAndGet());
+                return loaded.messageSource();
+            }).load(doNothing());
     }
 
     @SuppressWarnings("DataFlowIssue")

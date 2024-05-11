@@ -28,8 +28,8 @@ public interface LegacyFormatMessageBase extends ComponentMessageBase<LegacyForm
     /**
      * Creates a new {@link LegacyFormatMessageBase} from the message key and the {@link StringReplacement}.
      *
-     * @param messageKey the message key
-     * @param replacement   the {@link StringReplacement}
+     * @param messageKey  the message key
+     * @param replacement the {@link StringReplacement}
      * @return a new {@link LegacyFormatMessageBase}
      * @see LegacyFormatSource#getMessage(String, StringReplacement)
      */
@@ -41,8 +41,8 @@ public interface LegacyFormatMessageBase extends ComponentMessageBase<LegacyForm
     /**
      * Creates a new {@link LegacyFormatMessageBase} from the message key and the {@link StringReplacement}s.
      *
-     * @param messageKey the message key
-     * @param replacements  the {@link StringReplacement}s
+     * @param messageKey   the message key
+     * @param replacements the {@link StringReplacement}s
      * @return a new {@link LegacyFormatMessageBase}
      * @see LegacyFormatSource#getMessage(String, StringReplacement[])
      */
@@ -58,7 +58,7 @@ public interface LegacyFormatMessageBase extends ComponentMessageBase<LegacyForm
     /**
      * Creates a new {@link LegacyFormatMessageBase} from the message key and the {@link ReplacementBase}.
      *
-     * @param messageKey   the message key
+     * @param messageKey      the message key
      * @param replacementBase the {@link ReplacementBase}
      * @return a new {@link LegacyFormatMessageBase}
      * @see LegacyFormatSource#getMessage(String, StringReplacement)
@@ -71,7 +71,7 @@ public interface LegacyFormatMessageBase extends ComponentMessageBase<LegacyForm
     /**
      * Creates a new {@link LegacyFormatMessageBase} from the message key and the {@link ReplacementBase}s.
      *
-     * @param messageKey    the message key
+     * @param messageKey       the message key
      * @param replacementBases the {@link ReplacementBase}s
      * @return a new {@link LegacyFormatMessageBase}
      * @see LegacyFormatSource#getMessage(String, StringReplacement[])
@@ -81,8 +81,7 @@ public interface LegacyFormatMessageBase extends ComponentMessageBase<LegacyForm
         return switch (replacementBases.length) {
             case 0 -> messageKey(messageKey);
             case 1 -> withReplacementBase(messageKey, replacementBases[0]);
-            default ->
-                    new BaseImpls.WithReplacementBaseN(Objects.requireNonNull(messageKey), Objects.requireNonNull(replacementBases));
+            default -> new BaseImpls.WithReplacementBaseN(Objects.requireNonNull(messageKey), Objects.requireNonNull(replacementBases));
         };
     }
 

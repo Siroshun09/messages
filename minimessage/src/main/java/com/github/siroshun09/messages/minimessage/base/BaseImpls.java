@@ -64,7 +64,7 @@ final class BaseImpls {
     }
 
     record MessageBaseTagResolverBase(@TagPattern @NotNull String key,
-                                     @NotNull MiniMessageBase base) implements TagResolverBase {
+                                      @NotNull MiniMessageBase base) implements TagResolverBase {
         @Override
         public @NotNull TagResolver apply(@NotNull MiniMessageSource source) {
             return net.kyori.adventure.text.minimessage.tag.resolver.Placeholder.component(this.key, this.base.create(source));

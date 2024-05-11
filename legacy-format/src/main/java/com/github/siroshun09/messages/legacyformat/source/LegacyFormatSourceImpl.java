@@ -39,7 +39,7 @@ class LegacyFormatSourceImpl implements LegacyFormatSource {
         Objects.requireNonNull(replacements);
         var message = source.getMessage(key);
 
-        for (var replacement: replacements) {
+        for (var replacement : replacements) {
             message = message.replace(replacement.target(), replacement.replacement());
         }
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A record that holds strings for {@link String#replace(CharSequence, CharSequence)}.
  *
- * @param target the sequence of char values to be replaced
+ * @param target      the sequence of char values to be replaced
  * @param replacement the replacement
  */
 public record StringReplacement(@NotNull String target, @NotNull String replacement) {
@@ -15,7 +15,7 @@ public record StringReplacement(@NotNull String target, @NotNull String replacem
     /**
      * A constructor of {@link StringReplacement}.
      *
-     * @param target the sequence of char values to be replaced
+     * @param target      the sequence of char values to be replaced
      * @param replacement the replacement
      */
     public StringReplacement {

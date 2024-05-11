@@ -28,7 +28,7 @@ class ArgumentsGenerator(private val context: Context) : CodeGen {
         writer.writeLine("public interface $className${type(num)} ${extendsFunction(num)}{")
         writer.writeEmptyLine()
         writer.increaseIndent()
-        writeStaticMethodJavadoc(writer,num, className)
+        writeStaticMethodJavadoc(writer, num, className)
         writer.writeLine(contract(num))
         writer.writeLine("static ${type(num)} @NotNull $className${type(num)} arg$num(${argWithKey(num)}) {")
         writer.increaseIndent()
@@ -130,7 +130,7 @@ class ArgumentsGenerator(private val context: Context) : CodeGen {
     }
 
     private fun ordinal(num: Int): String {
-        return when(num) {
+        return when (num) {
             1 -> "1st"
             2 -> "2nd"
             3 -> "3rd"
@@ -138,7 +138,7 @@ class ArgumentsGenerator(private val context: Context) : CodeGen {
         }
     }
 
-    private fun javadocArgument(num: Int) : String{
+    private fun javadocArgument(num: Int): String {
         return if (num == 1) "an argument" else "the $num arguments"
     }
 
@@ -239,12 +239,14 @@ class ArgumentsGenerator(private val context: Context) : CodeGen {
         return IndentingWriter(dir.file(filename).asFile.writer(), context.indentSpaces)
     }
 
-    data class Context(val packageName: String, val className: String,
-                       val indentSpaces: Int = 4, val numberOfArguments: Int,
-                       val messageBaseClassName: String,
-                       val replacementBaseClassName: String,
-                       val returnStatement: String,
-                       val additionalImports: Sequence<String> = emptySequence()) {
+    data class Context(
+        val packageName: String, val className: String,
+        val indentSpaces: Int = 4, val numberOfArguments: Int,
+        val messageBaseClassName: String,
+        val replacementBaseClassName: String,
+        val returnStatement: String,
+        val additionalImports: Sequence<String> = emptySequence()
+    ) {
         fun create(): ArgumentsGenerator {
             return ArgumentsGenerator(this)
         }

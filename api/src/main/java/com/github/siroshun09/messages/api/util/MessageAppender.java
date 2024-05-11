@@ -17,7 +17,7 @@ public interface MessageAppender<T, M> {
     /**
      * Appends messages to the target.
      *
-     * @param target a target
+     * @param target     a target
      * @param messageMap a message map to append
      * @throws IOException if I/O error occurred
      */

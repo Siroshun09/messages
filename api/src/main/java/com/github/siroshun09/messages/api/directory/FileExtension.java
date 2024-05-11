@@ -35,7 +35,7 @@ public interface FileExtension {
      * @param locale a {@link Locale} to create a filename
      * @return a filename
      */
-    default @NotNull String toFilename(@NotNull Locale locale)  {
+    default @NotNull String toFilename(@NotNull Locale locale) {
         return Objects.requireNonNull(locale) + extension();
     }
 
@@ -45,9 +45,9 @@ public interface FileExtension {
      * @param filename a filename to parse
      * @return a {@link Locale} or {@code null}
      */
-    default @Nullable Locale parse(@NotNull String filename)  {
+    default @Nullable Locale parse(@NotNull String filename) {
         return filename.endsWith(extension()) ?
-                LocaleParser.parse(filename.substring(0, filename.length() - extension().length())) :
-                null;
+            LocaleParser.parse(filename.substring(0, filename.length() - extension().length())) :
+            null;
     }
 }

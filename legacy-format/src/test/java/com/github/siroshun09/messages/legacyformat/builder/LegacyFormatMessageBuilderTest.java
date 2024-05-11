@@ -30,19 +30,19 @@ class LegacyFormatMessageBuilderTest {
     @Test
     void testBuild() {
         Assertions.assertEquals(
-                Component.text("Hello, {world}!"),
-                newBuilder()
-                        .key("key")
-                        .placeholder("%hello%", "Hello")
-                        .build()
+            Component.text("Hello, {world}!"),
+            newBuilder()
+                .key("key")
+                .placeholder("%hello%", "Hello")
+                .build()
         );
 
         Assertions.assertEquals(
-                EXPECTED_HELLO_WORLD,
-                newBuilder()
-                        .key("key")
-                        .placeholders(PLACEHOLDERS)
-                        .build()
+            EXPECTED_HELLO_WORLD,
+            newBuilder()
+                .key("key")
+                .placeholders(PLACEHOLDERS)
+                .build()
         );
     }
 
@@ -51,15 +51,15 @@ class LegacyFormatMessageBuilderTest {
         var received = new AtomicBoolean();
 
         newBuilder()
-                .key("key")
-                .placeholders(PLACEHOLDERS)
-                .send(new Audience() {
-                    @Override
-                    public void sendMessage(@NotNull Component message) {
-                        Assertions.assertEquals(EXPECTED_HELLO_WORLD, message);
-                        received.set(true);
-                    }
-                });
+            .key("key")
+            .placeholders(PLACEHOLDERS)
+            .send(new Audience() {
+                @Override
+                public void sendMessage(@NotNull Component message) {
+                    Assertions.assertEquals(EXPECTED_HELLO_WORLD, message);
+                    received.set(true);
+                }
+            });
 
         Assertions.assertTrue(received.get());
     }
@@ -72,7 +72,7 @@ class LegacyFormatMessageBuilderTest {
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholder("test", null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholder(null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders((StringReplacement[]) null));
-        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders((Collection<StringReplacement>)null));
+        Assertions.assertThrows(NullPointerException.class, () -> newBuilder().placeholders((Collection<StringReplacement>) null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().build());
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().key("test").send(null));
         Assertions.assertThrows(NullPointerException.class, () -> newBuilder().send(Audience.empty()));

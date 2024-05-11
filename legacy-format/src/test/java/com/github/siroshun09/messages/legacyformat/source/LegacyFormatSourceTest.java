@@ -22,11 +22,11 @@ class LegacyFormatSourceTest {
     private static final String LEGACY_FORMAT_HELLO_WORLD = "&aHello&7, &#123456World&c&l!!";
     private static final String LEGACY_FORMAT_HELLO_WORLD_WITH_PLACEHOLDERS = "&a%hello%&7, &#123456{world}&c&l!!";
     private static final Component EXPECTED_HELLO_WORLD =
-            Component.text()
-                    .append(Component.text("Hello", NamedTextColor.GREEN))
-                    .append(Component.text(", ", NamedTextColor.GRAY))
-                    .append(Component.text("World", TextColor.fromHexString("#123456")))
-                    .append(Component.text("!!", Style.style(NamedTextColor.RED, TextDecoration.BOLD))).build();
+        Component.text()
+            .append(Component.text("Hello", NamedTextColor.GREEN))
+            .append(Component.text(", ", NamedTextColor.GRAY))
+            .append(Component.text("World", TextColor.fromHexString("#123456")))
+            .append(Component.text("!!", Style.style(NamedTextColor.RED, TextDecoration.BOLD))).build();
 
     @Test
     void testCreate() {

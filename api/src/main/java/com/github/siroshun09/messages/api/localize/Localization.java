@@ -1,7 +1,7 @@
 package com.github.siroshun09.messages.api.localize;
 
-import com.github.siroshun09.messages.api.source.MessageSource;
 import com.github.siroshun09.messages.api.source.FallingBackMessageSource;
+import com.github.siroshun09.messages.api.source.MessageSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;

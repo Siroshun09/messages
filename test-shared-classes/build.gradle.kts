@@ -15,7 +15,7 @@
  */
 
 plugins {
-    id ("messages.common-conventions")
+    id("messages.common-conventions")
 }
 
 dependencies {
