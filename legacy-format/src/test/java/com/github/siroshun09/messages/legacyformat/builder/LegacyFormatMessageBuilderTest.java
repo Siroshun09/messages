@@ -1,7 +1,7 @@
 package com.github.siroshun09.messages.legacyformat.builder;
 
 import com.github.siroshun09.messages.api.source.StringMessageMap;
-import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
+import com.github.siroshun09.messages.legacyformat.replacement.StringReplacement;
 import com.github.siroshun09.messages.legacyformat.source.LegacyFormatSource;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

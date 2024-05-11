@@ -21,7 +21,7 @@ public interface Placeholder<T> extends Function<T, ReplacementBase> {
      * @param function the {@link Function} that creates {@link String} from the argument
      * @param <T>      the type of the argument
      * @return a new {@link Placeholder}
-     * @see com.github.siroshun09.messages.legacyformat.relacement.StringReplacement
+     * @see com.github.siroshun09.messages.legacyformat.replacement.StringReplacement
      */
     @Contract("_, _ -> new")
     static <T> @NotNull Placeholder<T> string(@NotNull String key, @NotNull Function<? super T, String> function) {
@@ -35,7 +35,7 @@ public interface Placeholder<T> extends Function<T, ReplacementBase> {
      * @param function the {@link Function} that creates {@link String} from the argument and {@link LegacyFormatSource}
      * @param <T>      the type of the argument
      * @return a new {@link Placeholder}
-     * @see com.github.siroshun09.messages.legacyformat.relacement.StringReplacement
+     * @see com.github.siroshun09.messages.legacyformat.replacement.StringReplacement
      */
     @Contract("_, _ -> new")
     static <T> @NotNull Placeholder<T> stringWithSource(@NotNull String key, @NotNull BiFunction<? super T, ? super LegacyFormatSource, String> function) {

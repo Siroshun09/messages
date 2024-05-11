@@ -1,6 +1,6 @@
 package com.github.siroshun09.messages.legacyformat.base;
 
-import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
+import com.github.siroshun09.messages.legacyformat.replacement.StringReplacement;
 import com.github.siroshun09.messages.legacyformat.source.LegacyFormatSource;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;

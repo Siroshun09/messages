@@ -1,7 +1,7 @@
 package com.github.siroshun09.messages.legacyformat.base;
 
 import com.github.siroshun09.messages.api.base.ComponentMessageBase;
-import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
+import com.github.siroshun09.messages.legacyformat.replacement.StringReplacement;
 import com.github.siroshun09.messages.legacyformat.source.LegacyFormatSource;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

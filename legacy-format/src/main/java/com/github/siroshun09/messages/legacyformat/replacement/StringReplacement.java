@@ -1,4 +1,4 @@
-package com.github.siroshun09.messages.legacyformat.relacement;
+package com.github.siroshun09.messages.legacyformat.replacement;
 
 import org.jetbrains.annotations.NotNull;
 

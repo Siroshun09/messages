@@ -4,7 +4,7 @@ import com.github.siroshun09.messages.api.source.RawMessageHolder;
 import com.github.siroshun09.messages.legacyformat.builder.LegacyFormatMessageBuilder;
 import com.github.siroshun09.messages.api.source.ComponentSource;
 import com.github.siroshun09.messages.api.source.StringMessageSource;
-import com.github.siroshun09.messages.legacyformat.relacement.StringReplacement;
+import com.github.siroshun09.messages.legacyformat.replacement.StringReplacement;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.Contract;
