@@ -1,7 +1,8 @@
 import codegen.arguments.ArgumentsGenerator
 
 plugins {
-    id ("messages.common-conventions")
+    id("messages.common-conventions")
+    id("messages.publication")
 }
 
 dependencies {

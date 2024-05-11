@@ -1,5 +1,5 @@
 plugins {
-    `java-library`
+    id("messages.common-conventions")
     `maven-publish`
     signing
 }

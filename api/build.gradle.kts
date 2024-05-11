@@ -1,5 +1,6 @@
 plugins {
-    id ("messages.common-conventions")
+    id("messages.common-conventions")
+    id("messages.publication")
 }
 
 afterEvaluate {
