@@ -1,6 +1,6 @@
 [versions]
 
-annotations = "25.0.0"
+annotations = "26.0.1"
 adventure = "4.17.0"
 
 junit = "5.11.2"
