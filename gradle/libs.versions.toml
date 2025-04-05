@@ -1,7 +1,7 @@
 [versions]
 
 annotations = "26.0.2"
-adventure = "4.19.0"
+adventure = "4.20.0"
 
 junit = "5.12.2"
 
