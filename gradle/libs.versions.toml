@@ -3,7 +3,7 @@
 annotations = "26.0.2"
 adventure = "4.21.0"
 
-junit = "5.12.2"
+junit = "5.13.0"
 
 [libraries]
 
